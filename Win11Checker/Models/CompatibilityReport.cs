@@ -6,14 +6,10 @@
 		public TPM TPM { get; set; }
 		//System firmware: UEFI, Secure Boot capable
 		public UEFI UEFI { get; set; }
-		public CPU CPU { get; set; }
-		public bool Is64Bit { get; set; } = false;
 		//Processor: 1 gigahertz (GHz) or faster with two or more cores on a compatible 64-bit processor or system on a chip (SoC).
-		public bool CompatibleProcessor { get; set; } = false;
-		public string ProcessorName { get; set; }
+		public CPU CPU { get; set; }
 		//RAM: 4 gigabytes (GB) or greater.
-		public bool EnoughRAM { get; set; } = false;
-		public int RAMAmount { get; set; } = 0;
+		public RAM RAM { get; set; }
 		//Storage: 64 GB* or greater available storage is required to install Windows 11.
 		public bool EnoughStorage { get; set; } = false;
 		public int StorageAmount { get; set; } = 0;

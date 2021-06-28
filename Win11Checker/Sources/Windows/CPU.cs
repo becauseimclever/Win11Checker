@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Management;
+using System.Threading.Tasks;
+using Win11Checker.Models;
 
 namespace Win11Checker.Sources.Windows
 {
@@ -6,10 +10,20 @@ namespace Win11Checker.Sources.Windows
 	{
 		public static async Task<Models.CPU> GetCPU()
 		{
+			SelectQuery selectQuery = new("Win32_Processor");
+			ManagementObjectSearcher managementObjectSearcher = new(selectQuery);
+			ManagementObjectCollection managementObjects = managementObjectSearcher.Get();
+			var cpuName = string.Empty;
+			var architecture = Architecture.x86;
+			foreach (ManagementObject mo in managementObjects)
+			{
+				cpuName = mo["Name"].ToString();
+				architecture = (Architecture)(ushort)mo["Architecture"];
+			}
 			return await Task.FromResult(lookup.First());
 		}
 		#region Lookup Table
-		public readonly List<Models.CPU> lookup = new()
+		public static readonly List<Models.CPU> lookup = new()
 		{
 			new Models.CPU("Intel®", "Atom®", "x6200FE", true),
 			new Models.CPU("Intel®", "Atom®", "x6211E", true),
