@@ -11,25 +11,17 @@ namespace Win11Checker
     [OutputType(typeof(CompatibilityReport))]
     public class Win11Checker : Cmdlet
     {
-        protected override void ProcessRecord()
+        protected override async void ProcessRecord()
         {
-            var runSpace = RunspaceFactory.CreateRunspace();
-            runSpace.Open();
-            var pipeline = runSpace.CreatePipeline();
-            var tpmCmd = new Command("Get-TPM");
-            pipeline.Commands.Add(tpmCmd);
-            var tpmOutput = pipeline.Invoke();
-
-            pipeline = runSpace.CreatePipeline();
-            var SecureBootCmd = new Command("Confirm-SecureBootUEFI");
-            pipeline.Commands.Add(SecureBootCmd);
-            var SbOutput = pipeline.Invoke();
+           
 
 #pragma warning disable CA1416 // Validate platform compatibility
             SelectQuery selectQuery = new("Win32_Processor");
 #pragma warning restore CA1416 // Validate platform compatibility
-            ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher(selectQuery);
+            ManagementObjectSearcher managementObjectSearcher = new(selectQuery);
+#pragma warning disable CA1416 // Validate platform compatibility
             ManagementObjectCollection managementObjects = managementObjectSearcher.Get();
+#pragma warning restore CA1416 // Validate platform compatibility
             var cpuName = string.Empty;
             var architecture = Architecture.x86;
             foreach (ManagementObject mo in managementObjects)
@@ -40,8 +32,9 @@ namespace Win11Checker
             WriteObject(
                   new CompatibilityReport()
                   {
-                      Tpm = bool.Parse(tpmOutput.First().Properties["TpmPresent"].Value.ToString()),
-                      SecureBoot = bool.Parse(SbOutput.First().ToString()),
+                      TPM = await Sources.Windows.TPM.GetTPM(),
+                      UEFI = await Sources.Windows.UEFI.GetUEFI(),
+					  CPU = await Sources.Windows.CPU.GetCPU(),
                       ProcessorName = cpuName,
                       Is64Bit = architecture == Architecture.x64,
                       EnoughRAM = false,
