@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Win11Checker": {
+      "commandName": "Executable",
+      "executablePath": "pwsh",
+      "workingDirectory": "C:\\ws\\Win11Checker\\Win11Checker\\bin\\Debug\\net5.0"
+    }
+  }
+}
