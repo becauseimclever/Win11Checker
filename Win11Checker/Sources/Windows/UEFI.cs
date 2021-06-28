@@ -6,7 +6,7 @@ namespace Win11Checker.Sources.Windows
 {
     public class UEFI
     {
-        public static async Task<Models.UEFI> GetUEFI()
+        public static async Task<Models.UEFI> GetUEFIAsync()
         {
             var runSpace = RunspaceFactory.CreateRunspace();
             runSpace.Open();

@@ -9,16 +9,15 @@ namespace Win11Checker
 	{
 		protected override async void ProcessRecord()
 		{
-
-
 			WriteObject(
-				  new CompatibilityReport()
-				  {
-					  TPM = await Sources.Windows.TPM.GetTPM(),
-					  UEFI = await Sources.Windows.UEFI.GetUEFI(),
-					  CPU = await Sources.Windows.CPU.GetCPU(),
-					  RAM = await Sources.Windows.RAM.GetRAMAsync(),
-				  }); ;
+				new CompatibilityReport()
+				{
+					TPM = await Sources.Windows.TPM.GetTPMAsync(),
+					UEFI = await Sources.Windows.UEFI.GetUEFIAsync(),
+					CPU = await Sources.Windows.CPU.GetCPUAsync(),
+					RAM = await Sources.Windows.RAM.GetRAMAsync(),
+					Storage = await Sources.Windows.Storage.GetStorageAsync()
+				});
 		}
 	}
 }

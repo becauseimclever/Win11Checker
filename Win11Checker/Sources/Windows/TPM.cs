@@ -6,7 +6,7 @@ namespace Win11Checker.Sources.Windows
 {
     public class TPM
     {
-        public static async Task<Models.TPM> GetTPM()
+        public static async Task<Models.TPM> GetTPMAsync()
         {
             var runSpace = RunspaceFactory.CreateRunspace();
             runSpace.Open();

@@ -8,7 +8,7 @@ namespace Win11Checker.Sources.Windows
 {
 	public class CPU
 	{
-		public static async Task<Models.CPU> GetCPU()
+		public static async Task<Models.CPU> GetCPUAsync()
 		{
 			SelectQuery selectQuery = new("Win32_Processor");
 			ManagementObjectSearcher managementObjectSearcher = new(selectQuery);

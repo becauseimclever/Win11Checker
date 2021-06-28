@@ -11,8 +11,7 @@
 		//RAM: 4 gigabytes (GB) or greater.
 		public RAM RAM { get; set; }
 		//Storage: 64 GB* or greater available storage is required to install Windows 11.
-		public bool EnoughStorage { get; set; } = false;
-		public int StorageAmount { get; set; } = 0;
+		public Storage Storage { get; set; }
 		//Graphics card: Compatible with DirectX 12 or later, with a WDDM 2.0 driver.
 		public bool DirectX12Graphics { get; set; }
 		//Display: High definition (720p) display, 9" or greater monitor, 8 bits per color channel.
